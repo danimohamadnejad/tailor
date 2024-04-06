@@ -1,0 +1,23 @@
+{
+    "name": "dani/tailor",
+    "description": "tailor package by danial mohamadnejad",
+    "autoload": {
+        "psr-4": {
+            "Dani\\Tailor\\": "src/"
+        },
+        "files":["src/helpers.php"]
+    },
+    "authors": [
+        {
+            "name": "danial mohamadnejad",
+            "email": "danimohamadnejad@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "extra":{
+     "laravel":{
+        "providers":["Dani\\Tailor\\TailorServiceProvider"]
+     }
+    }
+}
