@@ -8,11 +8,15 @@ class ApiRequest{
  protected $method;
  protected $auth_header = "";   
  protected $auth_header_generation_attempts = 0;  
- 
+ protected $query = [];
+
  public function __construct(){
     $this->generate_auth_header_from_token(config('dani-tailor.zoho.access-token'));
  }
-
+ public function query(array $query = []){
+    $this->query = $query;
+    return $this;
+ }
  public function uri($uri){
   $this->uri = $uri;
   return $this;
@@ -32,7 +36,7 @@ class ApiRequest{
     {
      $this->generate_auth_header();
     }
-    $url = $this->base_uri."/".trim($this->uri, '/');
+    $url = $this->base_uri."/".trim($this->uri, '/').'?'.http_build_query($this->query);
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     if($this->is_post()){
