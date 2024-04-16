@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Dani\Tailor\Http\Requests\OrderSaveRequest;
 use App\Http\Controllers\Controller;
 use Dani\Tailor\Garments\Garment;
-use Dani\Tailor\Zoho\Models\Customer;
+use Dani\Tailor\ZohoBooks\Models\Customer;
 
 class OrderController extends Controller
 {
