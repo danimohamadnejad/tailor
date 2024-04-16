@@ -6,9 +6,7 @@ use Dani\Tailor\Zohobooks\Models\Organization;
 class HomeController extends Controller
 {
     public function index(Organization $model){
-        dd(
-            $model->get()
-        );
+         
     }
 }    
 

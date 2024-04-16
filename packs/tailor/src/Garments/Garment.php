@@ -20,6 +20,7 @@ abstract class Garment {
         $this->fabric = $fabric;
         return $this;
     }
+    public abstract function get_order_save_request_rules() : array;
     public abstract function get_cost() : float;
     public function set_fabric_by_type($fabric_type){
         $fabric_attributes = tailor_find_fabric_by_type($fabric_type);
@@ -35,4 +36,5 @@ abstract class Garment {
     public function get_fabric(){
         return $this->fabric;
     }
+    
 }

@@ -1,12 +1,12 @@
 <?php
 namespace Dani\Tailor\Zohobooks\Models;
-use Dani\Tailor\Zohobooks\ZohobookApiRequest;
+use Dani\Tailor\Zohobooks\ApiRequest;
 
 abstract class ZohobookModel {
-    protected ZohobookApiRequest $api_request;
+    protected ApiRequest $api_request;
     protected $uri;
     
-    public function __construct(ZohobookApiRequest $req){
+    public function __construct(ApiRequest $req){
         $this->api_request = $req;
     }
     public function get(){

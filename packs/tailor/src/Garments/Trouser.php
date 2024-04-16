@@ -11,4 +11,16 @@ class Trouser extends Garment{
      $out = $this->cost;
      return $out + $this->fabric->get_year_cost();        
     }
+    
+    public function get_order_save_request_rules() : array{
+        $sizes = [
+            'waist_around', 'hip_around', 'waist_to_heel' 
+        ];
+        $out = [];
+        foreach($sizes as $size){
+            $out[$size] = ['required', 'integer', 'min:0'];
+        }
+        return $out;
+    }
+    
 }

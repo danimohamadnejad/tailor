@@ -2,7 +2,7 @@
 namespace Dani\Tailor\Zohobooks;
 use Dani\Tailor\Zoho\Zoho;
 
-class ZohobookApiRequest{
+class ApiRequest{
  protected $base_uri = 'https://www.zohoapis.com/books/v3';
  protected $uri;
  protected $method;
