@@ -9,9 +9,15 @@ class ApiRequest{
  protected $auth_header = "";   
  protected $auth_header_generation_attempts = 0;  
  protected $query = [];
+ protected $body = [];
+ protected $response_code = null;
 
  public function __construct(){
     $this->generate_auth_header_from_token(config('dani-tailor.zoho.access-token'));
+ }
+ public function body(array $body = []){
+   $this->body = $body;
+   return $this;
  }
  public function query(array $query = []){
     $this->query = $query;
@@ -26,11 +32,21 @@ class ApiRequest{
     $this->method = $method;
     return $this;
  }
-
+ public function reset(){
+   $this->uri = '';
+   $this->query = [];
+   $this->body = [];
+   $this->method = '';
+   $this->response_code = null;
+   $this->reset_auth_header_generation_attempts();
+   return $this;
+}
  public function get(){
   return $this->method('GET')->send();     
  }
-
+ public function post(){
+   return $this->method('POST')->send();
+ }
  protected function send(){
     if($this->should_generate_auth_header())
     {
@@ -41,16 +57,23 @@ class ApiRequest{
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     if($this->is_post()){
      curl_setopt($curl, CURLOPT_POST, 1);
+     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->body));
     }
-    curl_setopt($curl, CURLOPT_HTTPHEADER, [
-      $this->auth_header,
-    ]);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $this->get_headers());
     $res = curl_exec($curl);
     curl_close($curl);
-    $this->reset_auth_header_generation_attempts();
-    return $this->extract_data_from_successful_response(
+    return $this->process_response(
       $res
     );
+ }
+ protected function get_headers(){
+   $out = [
+      $this->auth_header,
+   ];
+   if($this->is_post()){
+      $out[] = "Content-Type: application/json";
+   }
+   return $out;
  }
  protected function reset_auth_header_generation_attempts(){
     $this->auth_header_generation_attempts = 0;
@@ -89,13 +112,20 @@ class ApiRequest{
     }
     return $this;
  }
- protected function extract_data_from_successful_response($res){
+ public function is_successful(){
+   return $this->response_code === 0;
+ }
+ protected function process_response($res){
    if($res){
     $data = json_decode($res, 1);
-    array_shift($data);
-    array_shift($data); 
-    return current($data);
-   } 
-   return false;       
+    $this->response_code = current($data);
+    return $data;
+   }
+   return false;
+ }
+ public function extract_data_from_succesful_response(array $response = []){
+   array_shift($response);
+   array_shift($response);
+   return current($response); 
  }
 }

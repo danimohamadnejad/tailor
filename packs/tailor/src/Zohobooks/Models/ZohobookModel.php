@@ -6,13 +6,21 @@ abstract class ZohobookModel {
     protected ?ApiRequest $api_request = null;
     protected $uri;
     protected $query = [];
-    protected $key;
+    protected $primary_key = 'id';
     
     public function __construct(ApiRequest $req = null){
         $this->api_request = $req;
     }
+    public function getKey(){
+        $pk = $this->primary_key;
+        return $this->$pk;  
+    }
     public function get(){
-        $out = $this->api_request->query($this->query)->uri($this->uri)->get();
+        $res = $this->api_request->reset()->query($this->query)->uri($this->uri)->get();
+        $out = [];
+        if($this->api_request->is_successful()){
+         $out = $this->api_request->extract_data_from_succesful_response($res);
+        }
         foreach($out as $index=>$data){
             $out[$index] = $this->array_to_model($data);
         }
@@ -31,5 +39,9 @@ abstract class ZohobookModel {
         $out->$attribute = $value;
        } 
        return $out;
+    }
+    public function create(array $data){
+      $res = $this->api_request->uri($this->uri)->body($data)->post();  
+       dd($res);
     }
 }

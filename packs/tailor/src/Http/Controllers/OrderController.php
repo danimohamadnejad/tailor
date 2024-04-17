@@ -10,11 +10,16 @@ use Dani\Tailor\Zohobooks\Models\Contact;
 class OrderController extends Controller
 {
     public function store(OrderSaveRequest $req, SewOrder $order, Contact $customer_model){
+      Item::create([
+        'name'=>'dani',
+        'rate'=>200,
+      ]);
+      exit;
       $data = $req->validated();
       $garment = $req->get_garment();
       $garment->set_attributes($data);
-      $order->set_garment($garment)->set_customer(
+      $invoice = $order->set_garment($garment)->set_customer(
         $customer_model->filter_customers()->first()
-      )->create();
+      )->create_invoice();
     }
 }

@@ -6,7 +6,7 @@ use Dani\Tailor\Zohobooks\Models\Item;
 
 class SewOrder {
     protected Garment $garment;
-    protected Customer $customer;
+    protected Contact $customer;
     
     public function set_garment(Garment $garment){
        $this->garment =$garment;
@@ -18,7 +18,6 @@ class SewOrder {
         return $this;
     }
 
-    public function create(){
-              
+    public function create_invoice(){
     }
 }
