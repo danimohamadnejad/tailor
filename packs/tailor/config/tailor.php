@@ -23,7 +23,7 @@
     array (
       'type' => 'trouser',
       'text' => 'public.trouser',
-      'class' => 'Dani\\Tailor\\Garments\\Trouser',
+      'class' => 'Dani\\Tailor\\Garments\\Shirt',
       'sweing-cost' => 10.5,
     ),
   ),
