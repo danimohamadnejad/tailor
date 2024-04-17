@@ -17,5 +17,9 @@ class OrderController extends Controller
       $invoice = $order->set_garment($garment)->set_customer(
         $customer_model->filter_customers()->first()
       )->create_invoice();
+      return [
+        'flag'=>true,
+        'data'=>$invoice->to_array()
+      ];
     }
 }

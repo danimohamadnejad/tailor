@@ -28,8 +28,7 @@ class SewOrder {
             ]
         ];
         $data = array_merge($data, $data_from_garment);
-        $invoice = Invoice::model()->create($data);
-        var_dump($invoice, $invoice->getKey());exit;
+        return Invoice::model()->create($data);
     }
 
     private function create_item(){

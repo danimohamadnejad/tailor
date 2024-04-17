@@ -52,4 +52,7 @@ abstract class ZohobookModel {
         $class = get_called_class();
         return app()->make($class);
     }
+    public function to_array(){
+        return get_object_vars($this);
+    }
 }
