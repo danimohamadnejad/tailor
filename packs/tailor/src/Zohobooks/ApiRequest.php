@@ -128,4 +128,8 @@ class ApiRequest{
    array_shift($response);
    return current($response); 
  }
+ public function extract_msg_from_failed_response(array $response){
+   array_shift($response);
+   return current($response);
+ }
 }

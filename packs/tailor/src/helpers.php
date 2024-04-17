@@ -23,3 +23,9 @@ function tailor_find_fabric_by_type($type){
  } 
  return null;
 } 
+function inches_to_yards($inches){
+  return $inches * 0.02;
+}
+function get_currency(){
+  return "usd";
+}

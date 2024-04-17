@@ -132,7 +132,7 @@
         },
         {
             "name": "dani/tailor",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "./packs/tailor",

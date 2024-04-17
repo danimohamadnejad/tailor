@@ -41,7 +41,15 @@ abstract class ZohobookModel {
        return $out;
     }
     public function create(array $data){
-      $res = $this->api_request->uri($this->uri)->body($data)->post();  
-       dd($res);
+      $res = $this->api_request->reset()->uri($this->uri)->body($data)->post();  
+      if($this->api_request->is_successful()){
+        $data = $this->api_request->extract_data_from_succesful_response($res);
+        return $this->array_to_model($data);
+      }
+      return $this->api_request->extract_msg_from_failed_response($res);
+    }
+    public static function model(){
+        $class = get_called_class();
+        return app()->make($class);
     }
 }

@@ -1,7 +1,16 @@
 <?php
 namespace Dani\Tailor\Fabrics;
 abstract class Fabric {
-    public function get_yard_cost(){
-        return $this->yard_cost;
+    protected $fabric_type = '';
+    protected $attributes = [];
+
+    public function get_cost_per_yard(){
+        $this->init_attributes();
+        return $this->attributes['cost-per-yard'];
+    }
+    protected function init_attributes(){
+        if(empty($this->attributes))
+         $this->attributes = config("dani-tailor.fabrics.{$this->fabric_type}");  
+        return $this;
     }
 }

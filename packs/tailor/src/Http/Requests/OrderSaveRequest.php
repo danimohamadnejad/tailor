@@ -15,9 +15,11 @@ class OrderSaveRequest extends FormRequest
     public function rules(): array
     {
      $garment_types = array_keys(config('dani-tailor.garments'));
+     $fabric_types = array_keys(config('dani-tailor.fabrics'));
      /* basic rules */
      $out = [
         'garment_type'=>['required', "in:".implode(',', $garment_types)],
+        'fabric_type'=>['required', "in:".implode(',', $fabric_types),],
      ];   
      $garment_type = request()->input('garment_type');
      /* more rules to be added to $out based on garment type */
